@@ -1,0 +1,52 @@
+.timeFromTo_block {
+  margin-right: 30px;
+}
+
+.timeFromTo {
+  display: flex;
+  margin-bottom: 5px;
+  background-color: rgb(224, 224, 224);
+  border-radius: 5px;
+}
+
+.timeFromTo-buttons {
+  position: absolute;
+  left: 75%;
+  top: 5px;
+  display: flex;
+  background: none;
+}
+
+.timeFromTo-buttons li {
+  margin-right: 10px;
+}
+
+.red {
+  background-color: rgba(246, 0, 0, 0.183) !important;
+}
+
+.timeFromTo-select {
+  width: 80px;
+  padding: 10px;
+  text-align: center;
+  background-color: rgb(224, 224, 224);
+  border: none;
+  border-radius: 5px;
+
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.timeFromTo-option {
+  padding: 5px;
+  background-color: white;
+}
+
+.timeFromTo-span {
+  position: relative;
+  top: -2px;
+  margin: 0px 5px;
+  display: flex;
+  align-items: center;
+}
