@@ -21,6 +21,17 @@
   margin-right: 10px;
 }
 
+.timeFromTo-buttons li button {
+  background: none;
+  border: none;
+}
+
+.timeFromTo-buttons li button svg {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+
 .red {
   background-color: rgba(246, 0, 0, 0.183) !important;
 }
