@@ -43,7 +43,13 @@ class DaysOfWeek extends Component {
   };
 
   handleTimeBlockUpdate = (dayId, timeBlockData) => {
-    this.state.dayTimeData[dayId] = timeBlockData;
+    this.setState((prevState) => {
+      const newDayTimeData = { ...prevState.dayTimeData }
+      newDayTimeData[dayId] = timeBlockData;
+
+      return { dayTimeData: newDayTimeData };
+
+    })
   };
 
   handleSelectLocation = (selectedLocation) => {
@@ -59,7 +65,7 @@ class DaysOfWeek extends Component {
       location: selectedLocation,
     }));
 
-    localStorage.setItem('weekly', JSON.stringify(dataToSave));
+    localStorage.setItem('weekly-chart', JSON.stringify(dataToSave));
     this.setState({ saveToLocalStorageTriggered: true });
   };
 
