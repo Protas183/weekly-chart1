@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Select from 'react-select';
 import { AiFillHome } from 'react-icons/ai';
 import { HiMiniBuildingOffice2 } from 'react-icons/hi2';
@@ -23,35 +23,48 @@ const customStyles = {
         backgroundColor: '#6e7c7c',
         color: '#fff',
         },
-  }),
+    }),
     menu: (provided) => ({
-    ...provided,
-    top: "35px", // убираем отступ
-  }),
+      ...provided,
+      top: "35px",
+    }),
 };
 
 
 const options = [
-  { value: 'value1', label: <><AiFillHome /> Home</> },
-  { value: 'value2', label: <><HiMiniBuildingOffice2 /> Office</> },
-  { value: 'value3', label: <><MdOutlineLocationOff /> Unspecified</> },
+  { value: 'Home', label: <><AiFillHome /> Home</> },
+  { value: 'Office', label: <><HiMiniBuildingOffice2 />Office</> },
+  { value: 'Unspecified', label: <><MdOutlineLocationOff /> Unspecified</> },
 ];
 
-const SelectLocation = () => {
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+class SelectLocation extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedOption: options[0],
+    };
+  }
 
-  const handleChange = (selected) => {
-    setSelectedOption(selected);
+  handleChange = (selected) => {
+    this.setState({ selectedOption: selected });
+    console.log(selected.value)
+    this.props.onSelectLocation(this.props.index, selected.value);
   };
 
-  return (
-    <Select
-        value={selectedOption}
-        onChange={handleChange}
+  componentDidMount = () => {
+    this.props.onSelectLocation(this.props.index, this.state.selectedOption.value);
+  }
+
+  render() {
+    return (
+      <Select
+        value={this.state.selectedOption}
+        onChange={this.handleChange}
         options={options}
         styles={customStyles}
-    />
-  );
-};
+      />
+    );
+  }
+}
 
 export default SelectLocation;

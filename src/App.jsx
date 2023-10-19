@@ -6,10 +6,10 @@ import DaysOfWeek from "./components/DaysOfWeek";
 class App extends Component {
 
   render() {
-    return (      
+    return (
       <div className="App_section">
-        <DaysOfWeek />       
-  
+        <DaysOfWeek />
+
       </div>
     );
   };

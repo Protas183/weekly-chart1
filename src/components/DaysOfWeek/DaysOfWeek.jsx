@@ -2,16 +2,18 @@ import React, { Component } from 'react';
 import './DaysOfWeek.css';
 import { FaRegQuestionCircle } from 'react-icons/fa'
 import TimeBlock from '../TimeBlock/TimeBlock';
-import SelectLocation from '../SelectLocation/SelectLocation';
+
+
 
 class DaysOfWeek extends Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedDays: [],
+      dayTimeData: [],
+      selectedLocation: {},
     };
   }
-
   days = [
     { id: 'id-1', letter: 'M', name: 'Monday' },
     { id: 'id-2', letter: 'T', name: 'Tuesday' },
@@ -40,21 +42,35 @@ class DaysOfWeek extends Component {
     });
   };
 
-  handleAddItems = () => {
-    this.setState((prevState) => ({ numberOfItems: prevState.numberOfItems + 1 }));
+  handleTimeBlockUpdate = (dayId, timeBlockData) => {
+    this.state.dayTimeData[dayId] = timeBlockData;
   };
 
-  handleDeleteItem = () => {
-    if (this.state.numberOfItems > 1) {
-      this.setState((prevState) => ({ numberOfItems: prevState.numberOfItems - 1 }));
-    }
+  handleSelectLocation = (selectedLocation) => {
+    this.setState({ selectedLocation });
   };
+
+ handleSaveToLocalStorage = () => {
+   const { selectedDays, dayTimeData, selectedLocation } = this.state;
+
+    const dataToSave = selectedDays.map((dayId) => ({
+      name : this.days.find((item) => item.id === dayId )?.name,
+      time: dayTimeData[dayId],
+      location: selectedLocation,
+    }));
+
+    localStorage.setItem('weekly', JSON.stringify(dataToSave));
+    this.setState({ saveToLocalStorageTriggered: true });
+  };
+
 
   render() {
     const { selectedDays } = this.state;
     const sortedSelectedDays = selectedDays.sort(
       (a, b) => this.days.findIndex(day => day.id === a) - this.days.findIndex(day => day.id === b)
     );
+
+
     return (
       <div>
         <div className='daysOfWeek_buttonsList'>
@@ -77,20 +93,20 @@ class DaysOfWeek extends Component {
             <ul className='dayOfWeek_chart-title'>
               <li>WORKING HOURS</li>
               <li>WORKING LOCATION <FaRegQuestionCircle /></li>
-            </ul>          
+            </ul>
              <ul>
               {sortedSelectedDays.map((selectedDayId) => (
                 <li key={selectedDayId} className='dayOfWeek_chart'>
                   <p className='dayOfWeek_chart-name'>
                     {this.days.find((dayInfo) => dayInfo.id === selectedDayId)?.name}
-                  </p>                    
-                  <TimeBlock />
-                  <SelectLocation /> 
+                  </p>
+                  <TimeBlock dayId={ selectedDayId } onTimeBlockUpdate={this.handleTimeBlockUpdate} />
                 </li>
               ))}
             </ul>
           </div>
         )}
+        <button onClick={this.handleSaveToLocalStorage}>To Local Storage</button>
       </div>
     );
   }
